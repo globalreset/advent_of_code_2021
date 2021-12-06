@@ -1,18 +1,4 @@
 input = IO.readlines("dayThreeInput.txt").collect { |i| i.chomp.split('').collect{ |j| j.to_i } }
-input2 = [
-   "00100",
-   "11110",
-   "10110",
-   "10111",
-   "10101",
-   "01111",
-   "00111",
-   "11100",
-   "10000",
-   "11001",
-   "00010",
-   "01010"
-].collect { |i| i.split('').collect {|j| j.to_i} }
 
 moreOnes = input.transpose.collect { |i| (i.sum(0.0)/i.size).round(0) }
 
