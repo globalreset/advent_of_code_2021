@@ -9,7 +9,6 @@ moreOnes.each_index { |i|
 }
 puts gamma * ((~gamma) & ((1<<moreOnes.size) -1))
 
-bitPos = 0
 o2 = input.clone
 co2 = input.clone
 moreOnes.each_index { |bitPos|
