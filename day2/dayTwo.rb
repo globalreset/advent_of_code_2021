@@ -14,6 +14,10 @@ input.each { |i|
 
 puts pos[0]*pos[1]
 
+# cool ruby solution I saw from someone else that I want to remember
+sums = input.group_by(&:first).transform_values{|a| a.map(&:last).sum }
+puts sums['forward'] * (sums['down'] - sums['up'])
+
 
 pos = [0,0,0]
 
