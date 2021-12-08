@@ -81,7 +81,7 @@ require 'set'
 
 sum = 0
 input.each { |line|
-   i,o = line.split(" | ")
+   i,o = line.split(" | ").map{|w| w.split(" ")}
    # whatever mapping of segments is found, these are the required digits in order
    d = ["abcefg", "cf", "acdeg", "acdfg", "bcdf", "abdfg", "abdefg", "acf", "abcdefg", "abcdfg"]
    req = Set.new(d)
@@ -89,11 +89,11 @@ input.each { |line|
       # use permutations of the full list of segments to create every possible segment map
       testMap = Hash[x.zip("abcdefg".chars)]
       # map the characters in the input string using segment map
-      testInput = Set.new(i.split(" ").map{ |c| c.chars.map{ |e| testMap[e] }.sort.join } )
+      testInput = Set.new(i.map{ |c| c.chars.map{ |e| testMap[e] }.sort.join } )
       # check to see if this gave us the full set of consistent characters
       if(req == testInput)
          # map output using test map and find ordinal value
-         sum += o.split(" ").map{ |w| w.chars.map{ |e| testMap[e] }.sort.join }.map { |w| d.find_index(w) }.join.to_i
+         sum += o.map{ |w| w.chars.map{ |e| testMap[e] }.sort.join }.map { |w| d.find_index(w) }.join.to_i
          break
       end
    }
