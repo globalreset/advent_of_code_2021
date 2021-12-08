@@ -21,34 +21,33 @@ puts digitCnt.values.inject(0, :+)
 sum = 0
 input.each { |line|
    digit = {}
-   lineParts = line.split(" | ")
-   fullLine = "#{lineParts[0]} #{lineParts[1]}".split(" ")
-   
-   digit[1] = fullLine.find { |word| word.size==2 }.chars.sort.join
-   digit[4] = fullLine.find { |word| word.size==4 }.chars.sort.join
-   digit[7] = fullLine.find { |word| word.size==3 }.chars.sort.join
-   digit[8] = fullLine.find { |word| word.size==7 }.chars.sort.join
+   i,o = line.split(" | ").map{|w| w.split(" ")}
+ 
+   digit[1] = i.find { |word| word.size==2 }.chars.sort.join
+   digit[4] = i.find { |word| word.size==4 }.chars.sort.join
+   digit[7] = i.find { |word| word.size==3 }.chars.sort.join
+   digit[8] = i.find { |word| word.size==7 }.chars.sort.join
 
    # 9 is only 6 segment digit that contains all same segments as 4
-   digit[9] = fullLine.find { |word|
+   digit[9] = i.find { |word|
       word.size == 6 && digit[4].chars.inject(true) { |andSum, c| 
          andSum = andSum && word.include?(c)
       }
    }.chars.sort.join
-   # remove all 9s
-   fullLine = fullLine.collect { |word| word.chars.sort.join==digit[9] ? nil : word }.compact
+   # remove 9
+   i = i.collect { |word| word.chars.sort.join==digit[9] ? nil : word }.compact
 
    # after removing 9, 0 is only 6 segment digit that contains all same segments as 1
-   digit[0] = fullLine.find { |word|
+   digit[0] = i.find { |word|
       word.size == 6 && digit[1].chars.inject(true) { |andSum, c| 
          andSum = andSum && word.include?(c)
       }
    }.chars.sort.join
-   # remove all 0s
-   fullLine = fullLine.collect { |word| word.chars.sort.join==digit[0] ? nil : word }.compact
+   # remove 0
+   i = i.collect { |word| word.chars.sort.join==digit[0] ? nil : word }.compact
   
    # after removing 9 and 0, 6 is only 6 segment digit left
-   digit[6] = fullLine.find { |word| word.size==6 }.chars.sort.join
+   digit[6] = i.find { |word| word.size==6 }.chars.sort.join
 
    # we now have enough info to calculate all the segment positions
    a = digit[7].delete(digit[1])
@@ -71,11 +70,7 @@ input.each { |line|
    lookup[[a,b,c,d,e,f,g].sort.join] = 8
    lookup[[a,b,c,d,f,g].sort.join] = 9
 
-   output = 0
-   lineParts[1].split(" ").each{ |word|
-      output = output*10 + lookup[word.chars.sort.join]
-   }
-   sum += output
+   sum += o.map{|word| lookup[word.chars.sort.join].to_s}.join.to_i
 }
 
 puts sum
