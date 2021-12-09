@@ -4,34 +4,31 @@ list = []
 sum = 0
 input.size.times { |y|
    input[y].size.times { |x|
-      if( (y==0 || input[y][x]<input[y-1][x]) && 
-          (x==0 || input[y][x]<input[y][x-1]) && 
-          (y==input.size-1 || input[y][x]<input[y+1][x]) && 
-          (x==input[y].size-1 || input[y][x]<input[y][x+1]) )
-         sum += 1 + input[y][x] 
+      smallestNeighbor = [[y+1,x], [y-1,x], [y,x+1], [y,x-1]].map { |a,b| 
+         if((0...input.size).include?(a) && (0...input[a].size).include?(b)) 
+            input[a][b] 
+         end
+      }.compact.min
+      if(input[y][x] < smallestNeighbor)
          list <<= [y,x]
       end
    } 
 }
-puts sum
+
+puts list.map { |y,x| input[y][x] }.sum + list.size
 
 def calcBasin(input, y, x, visited)
-   if(visited[[y,x]] || y<0 || y>input.size-1 || x<0 || x>input[y].size-1 || input[y][x] == 9)
+   if(visited[[y,x]] || input[y][x] == 9)
       return 0
    else
       visited[[y,x]] = true
       return 1 + 
-         calcBasin(input, y+1, x, visited) + 
-         calcBasin(input, y-1, x, visited) + 
-         calcBasin(input, y, x+1, visited) + 
-         calcBasin(input, y, x-1, visited)
+         [[y+1,x], [y-1,x], [y,x+1], [y,x-1]].map { |a,b| 
+            if((0...input.size).include?(a) && (0...input[a].size).include?(b)) 
+               calcBasin(input, a, b, visited) 
+            end
+         }.compact.sum
    end
 end
 
-basinSizes = []
-list.each { |y,x|
-   visited = {}
-   visited.default = false
-   basinSizes << calcBasin(input, y, x, visited)
-}
-puts basinSizes.sort[-3..-1].inject(:*)
+puts list.map { |y,x| calcBasin(input, y, x, {}) }.sort[-3..-1].inject(:*)
