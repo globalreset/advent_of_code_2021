@@ -1,13 +1,4 @@
-input = IO.readlines("dayNineInput.txt")
-input2 = [
-   "2199943210",
-   "3987894921",
-   "9856789892",
-   "8767896789",
-   "9899965678"
-]
-
-input = input.map{|line| line.chomp.chars.map{ |c| c.to_i } }
+input = IO.readlines("dayNineInput.txt").map{|line| line.chomp.chars.map{ |c| c.to_i } }
 
 list = []
 sum = 0
