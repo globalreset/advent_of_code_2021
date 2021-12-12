@@ -17,7 +17,7 @@ def countPaths(node, path)
    }.compact.inject(:+)
 end
 
-puts countPaths("start", [])
+puts countPaths("start", ["start"])
 
 
 def countPaths2(node, path)
