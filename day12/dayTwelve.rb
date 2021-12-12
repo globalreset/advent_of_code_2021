@@ -25,7 +25,7 @@ def countPaths2(node, path)
    return $allNodes[node].select{|n| n!="start"}.map { |n|
       if(n=="end")
          1
-      elsif(cntHash[n]==nil || cntHash[n]==0 || (cntHash[n]>0 && !cntHash.values.include?(2)) )
+      elsif(!$lowerCaseNodes.include?(n) || cntHash[n]==0 || !cntHash.values.include?(2) )
          countPaths2(n, path + [n])
       end
    }.compact.inject(:+)
