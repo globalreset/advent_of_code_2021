@@ -26,9 +26,8 @@ rules = input[2..-1].map{|c| c.split(" -> ")}.to_h
 
 puts template
 10.times { |i|
-   pairs = template.chars[0..-2].zip(template.chars[1..-1]).map{|c| c.join}
-   template = pairs.map { |p|
-     p.chars[0] + rules[p] 
+   template = template.chars.each_cons(2).map { |p|
+     p[0] + rules[p.join] 
    }.join + template.chars[-1]
 }
 
@@ -38,9 +37,8 @@ allCharCnt = allChars.zip(allChars.map{|c|template.count(c)}).to_h
 puts "10 steps: #{allCharCnt.values.max - allCharCnt.values.min}"
 
 30.times { |i|
-   pairs = template.chars[0..-2].zip(template.chars[1..-1]).map{|c| c.join}
-   template = pairs.map { |p|
-     p.chars[0] + rules[p] 
+   template = template.chars.each_cons(2).map { |p|
+     p[0] + rules[p.join] 
    }.join + template.chars[-1]
 }
 puts "2"
