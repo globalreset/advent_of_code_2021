@@ -9,45 +9,50 @@ class Hash
 end
 
 
-# generic dijkstra's search
-# getCost and getNeighbors must be implemented for the graph
-#def getCost(neighbor)
-#  return xyz
-#end
-#def getNeighbors(current)
-#   return [a,b,c]
-#end
-def printPath(start, goal, pathHash)
-   pathStr = goal
-   until(goal==start)
-      pathStr += "<=#{cameFrom[goal]}"
-      goal = cameFrom[goal]
+require_relative 'pqueue'
+
+class DijkstraSearch
+   Infinity = 1/0.0
+
+   def initialize(neighborHash, costHash)
+      @neighborHash = neighborHash
+      @costHash = costHash
+      @pathHash = {}
+      @pathScore = {}
+      @pathScore.default = Infinity
    end
-end
-def search(start, goal) 
-   inf = 1/0.0
-   pathHash = {}
-   pathScore = {}
-   pathScore.default = inf
-   pathScore[start] = 0
-   pqueue = [start]
-   while(!pqueue.empty?) do
-      current = pqueue.pop
-      if(current==goal)
-         #printPath(start, goal, pathHash)
-         return pathScore[current]
+   
+   def printPath(start, goal)
+      pathStr = goal
+      until(goal==start)
+         pathStr += "<=#{pathHash[goal]}"
+         goal = pathHash[goal]
       end
-      getNeighbors(current).each { |n|
-         newPathScore = pathScore[current] + getCost(n)
-         if(newPathScore < pathScore[n])
-            pathHash[n] = current
-            pathScore[n] = newPathScore 
-            if(!pqueue.include?(n))
-               pqueue.push(n)
-               # this is pretty slow for the bigger version
-               pqueue.sort! {|a,b| pathScore[b]<=>pathScore[a]}
-            end
+   end
+
+   # generic dijkstra's search
+   def search(start, goal)
+      @pathHash = {}
+      @pathScore = {}
+      @pathScore.default = Infinity
+      @pathScore[start] = 0
+      pqueue = PQueue.new([start]) {|a,b| @pathScore[b]<=>@pathScore[a]}
+      while(!pqueue.empty?) do
+         current = pqueue.pop
+         if(current==goal)
+            return @pathScore[current]
          end
-      }
+         @neighborHash[current].each { |n|
+            newPathScore = @pathScore[current] + @costHash[n]
+            if(newPathScore < @pathScore[n])
+               @pathHash[n] = current
+               @pathScore[n] = newPathScore 
+               if(!pqueue.include?(n))
+                  pqueue.push(n)
+               end
+            end
+         }
+      end
+      return nil
    end
 end
