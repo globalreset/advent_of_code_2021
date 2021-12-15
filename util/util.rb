@@ -17,6 +17,13 @@ end
 #def getNeighbors(current)
 #   return [a,b,c]
 #end
+def printPath(start, goal, pathHash)
+   pathStr = goal
+   until(goal==start)
+      pathStr += "<=#{cameFrom[goal]}"
+      goal = cameFrom[goal]
+   end
+end
 def search(start, goal) 
    inf = 1/0.0
    pathHash = {}
