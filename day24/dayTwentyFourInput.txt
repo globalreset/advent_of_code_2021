@@ -1,0 +1,265 @@
+inp w     #w=d0
+mul x 0   #x=0
+add x z   #x=z
+mod x 26  #x=z%26
+div z 1   #z=0
+add x 13  #x=13+(z%26)
+eql x w   #x=0
+eql x 0   #x=1
+mul y 0   #y=0
+add y 25  #y=25
+mul y x   #y=25
+add y 1   #y=26
+mul z y   #z=0
+mul y 0   #y=0
+add y w   #y=d0
+add y 8   #y=(d0+8)
+mul y x   #y=(d0+8)
+add z y   #z=(d0+8)
+
+inp w     #w=d1
+mul x 0   #x=0
+add x z   #x=(d0+8)
+mod x 26  #x=(d0+8)%26
+div z 1   #z=(d0+8)
+add x 12  #x=(d0+8)%26+12
+eql x w   #x=0
+eql x 0   #x=1
+mul y 0   #y=0
+add y 25  #y=25
+mul y x   #y=25
+add y 1   #y=26
+mul z y   #z=(d0+8)*26
+mul y 0   #y=0
+add y w   #y=d1
+add y 13  #y=(d1+13)
+mul y x   #y=(d1+13)
+add z y   #z=(d0+8)*26+(d1+13)
+
+inp w     #w=d2
+mul x 0   #x=0
+add x z   #x=(d0+8)*26+(d1+13)
+mod x 26  #x=(d1+13)
+div z 1   #z=(d0+8)*26+(d1+13)
+add x 12  #x=(d1+25)
+eql x w   #x=0
+eql x 0   #x=1
+mul y 0   #y=0
+add y 25  #y=25
+mul y x   #y=25
+add y 1   #y=26
+mul z y   #z=((d0+8)*26 + (d1+13))*26
+mul y 0   #y=0
+add y w   #y=d2
+add y 8   #y=(d2+8)
+mul y x   #y=(d2+8)
+add z y   #z=((d0+8)*26 + (d1+13))*26 + (d2+8)
+
+inp w     #w=d3
+mul x 0   #x=0
+add x z   #x=z
+mod x 26  #x=(d2+8)
+div z 1   #z=z
+add x 10  #x=(d2+10)
+eql x w   #x=0
+eql x 0   #x=1
+mul y 0   #y=0
+add y 25  #y=25
+mul y x   #y=25
+add y 1   #y=26
+mul z y   #z=z*26
+mul y 0   #y=0
+add y w   #y=d3
+add y 10  #y=(d3+10)
+mul y x   #y=(d3+10)
+add z y   #z=(((d0+8)*26 + (d1+13))*26 + (d2+8))*26 + (d3+10)
+
+inp w     #w=d4
+mul x 0   #x=0
+add x z   #x=z
+mod x 26  #x=(d3+10)
+div z 26  #z=((d0+8)*26 + (d1+13))*26 + (d2+8)
+add x -11 #x=(d3-1)
+eql x w   #x=1 if(d4==d3-1)
+eql x 0   #x=0
+mul y 0   #y=0
+add y 25  #y=25
+mul y x   #y=0
+add y 1   #y=1
+mul z y   #z=z
+mul y 0   #y=0
+add y w   #y=d4
+add y 12  #y=d4+12
+mul y x   #y=0
+add z y   #z=((d0+8)*26 + (d1+13))*26 + (d2+8)
+
+inp w     #w=d5
+mul x 0
+add x z
+mod x 26  #x=(d2+8)
+div z 26  #z=(d0+8)*26 + (d1+13)
+add x -13
+eql x w   #x=1 if(d5=d2-5)
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 1
+mul y x
+add z y   #z=(d0+8)*26 + (d1+13)
+
+inp w     #w=d6
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 15
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 13
+mul y x
+add z y   #z=((d0+8)*26 + (d1+13))*26 + (d6+13)
+
+inp w     #w=d7
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 10
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 5
+mul y x
+add z y   #z=(((d0+8)*26 + (d1+13))*26 + (d6+13))*26 + (d7+5)
+
+inp w     #w=d8
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -2
+eql x w   #x=1 if(d8==d7+3)
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 10
+mul y x
+add z y   #z=((d0+8)*26 + (d1+13))*26 + (d6+13)
+
+inp w     #w=d9
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -6
+eql x w   #x=1 if(d9==d6+7)
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 3
+mul y x
+add z y   #z=(d0+8)*26 + (d1+13)
+
+inp w     #w=d10
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 14
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y   #z=((d0+8)*26 + (d1+13))*26 + (d10+2)
+
+inp w     #w=d11
+mul x 0
+add x z
+mod x 26
+div z 26
+add x 0
+eql x w   #x=1 if(d11==d10+2)
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y   #z=(d0+8)*26 + (d1+13)
+
+inp w     #w=d12
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -15
+eql x w   #x=1 if(d12==d1-2)
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 12
+mul y x
+add z y   #z=(d0+8)
+
+inp w     #w=d13
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -4
+eql x w   #x=1 if(d13=d0+4)
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 7
+mul y x
+add z y   #z=1 if(stack is empty)
